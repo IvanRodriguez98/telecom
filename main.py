@@ -1,4 +1,5 @@
 from SistemaAcceso import SistemaAcceso
+from SistemaAlarma import SistemaAlarma
 import tkinter as tk
 from tkinter import messagebox,simpledialog
 from Cache import Cache
@@ -11,24 +12,41 @@ class App():
         self.window.title("Centro de Datos")
         self.datosCache = Cache("Ivan","Administrador")
         self.sistemaAcceso = SistemaAcceso(2349)
+        self.sistemaAlarma = SistemaAlarma(1234)
         self.window.geometry("1000x800")
         self.buildApp()
         self.buildLabels()
+        self.update_clock()
         self.window.mainloop()
 
+    def update_clock(self):
+        now = time.strftime("%d/%m/%y %H:%M:%S")
+        self.lblReloj.configure(text=now)
+        self.window.after(1000,self.update_clock)
+    
     def buildLabels(self):
         estadoSistema = "Activo" if self.sistemaAcceso.estaActivo() else "Inactivo"
         estadoServo = "Activa" if self.sistemaAcceso.servoActivo() else "Inactiva"
         frame_nombre = tk.Frame(
             master=self.window, relief=tk.RAISED, borderwidth=0)
         frame_nombre.grid(row=0, column=0)
-        self.lblEstadoSistemaAcceso = tk.Label(master=frame_nombre, text=f"Estado del Sistema: {estadoSistema}")
+        self.lblEstadoSistemaAcceso = tk.Label(master=frame_nombre, text=f"Estado del sistema de acceso: {estadoSistema}")
         self.lblEstadoSistemaAcceso.pack()
         frame_pluma = tk.Frame(
             master=self.window, relief=tk.RAISED, borderwidth=0)
         frame_pluma.grid(row=9, column=0)
         self.lblEstadoPluma = tk.Label(master=frame_pluma, text=f"Estado de la pluma: {estadoServo}")
         self.lblEstadoPluma.pack()
+        frame_usuario = tk.Frame(
+            master=self.window, relief=tk.RAISED, borderwidth=0)
+        frame_usuario.grid(row=0, column=1)
+        self.lblUsuario = tk.Label(master=frame_usuario, text=f"Usuario actual: {self.datosCache.usuario}")
+        self.lblUsuario.pack()
+        frame_reloj = tk.Frame(
+            master=self.window, relief=tk.RAISED, borderwidth=0)
+        frame_reloj.grid(row=0, column=5)
+        self.lblReloj = tk.Label(master=frame_reloj)
+        self.lblReloj.pack()
 
     def buildApp(self):
         frame_1 = tk.Frame(master=self.window, relief=tk.RAISED, borderwidth=0)
@@ -63,7 +81,7 @@ class App():
                 estado = "Activo" if self.sistemaAcceso.estaActivo() else "Inactivo"
                 linea = f"[{time.strftime('%d-%b-%Y %H:%M:%S')}] Estado del sistema: {estado}," \
                                         f" operacion realizada por: {self.datosCache.usuario} con rol {self.datosCache.rol}\n"
-                self.lblEstadoSistemaAcceso['text'] = f"Estado del Sistema: {estado}"
+                self.lblEstadoSistemaAcceso['text'] = f"Estado del sistema de acceso: {estado}"
                 self.btnDesactivar['text'] = "Desactivar" if self.sistemaAcceso.estaActivo() else "Activar"
                 self.sistemaAcceso.registrarEnBitacora(linea)
             else:
@@ -112,10 +130,10 @@ class App():
     def cambiarEstadoPluma(self):
         if self.sistemaAcceso.estaActivo():
                 self.sistemaAcceso.cambiarEstadoServo()
-                estado = "Activa" if self.sistemaAcceso.estaActivo() else "Inactiva"
+                estado = "Activa" if self.sistemaAcceso.estadoServo else "Inactiva"
                 linea = f"[{time.strftime('%d-%b-%Y %H:%M:%S')}] Estado de la pluma: {estado}," \
                                         f" operacion realizada por: {self.datosCache.usuario} con rol {self.datosCache.rol}\n"
-                self.lblEstadoPluma['text'] = f"Estado de la Pluma: {estado}"
+                self.lblEstadoPluma.configure(text=f"Estado de la Pluma: {estado}")
                 self.btnEstadoPluma['text'] = "Desactivar pluma" if self.sistemaAcceso.servoActivo() else "Activar pluma"
                 self.sistemaAcceso.registrarEnBitacora(linea)
         else:
