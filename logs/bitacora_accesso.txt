@@ -1,3 +1,0 @@
-[24-Nov-2020 18:34:36] Cambio el angulo de la pluma, ahora con un valor de 90 grado(s), operacion realizada por: Ivan con rol Administrador
-[24-Nov-2020 18:47:06] Cambio el angulo de la pluma, ahora con un valor de 50 grado(s), operacion realizada por: Ivan con rol Administrador
-[24-Nov-2020 18:47:14] Estado del sistema: Inactivo, operacion realizada por: Ivan con rol Administrador

@@ -4,7 +4,7 @@ from gpiozero import AngularServo
 
 class SistemaAcceso():
 
-    def __init__(self):
+    def __init__(self,codigoDesactivacion):
         self.activo = True
         self.DIR_BASE = os.path.dirname(os.path.abspath(__file__))
         self.rutaLogs = os.path.join(self.DIR_BASE, 'logs')
@@ -14,6 +14,7 @@ class SistemaAcceso():
         self.estadoServo = True
         self.anguloDefault = 90
         self.gpioServoPin = 17
+        self.codigoDesactivacion = codigoDesactivacion
         self.servo = AngularServo(self.gpioServoPin)
 
     def cambiarEstado(self):
@@ -24,6 +25,9 @@ class SistemaAcceso():
 
     def estaActivo(self):
         return self.activo
+    
+    def servoActivo(self):
+        return self.estadoServo
 
     def crearArchivo(self):
         try:
@@ -39,10 +43,6 @@ class SistemaAcceso():
 
     def bajarPluma(self, linea):
         self.servo.angle = 0
-        self.registrarEnBitacora(linea)
-
-    def cambiarEstadoPluma(self, linea):
-        self.estadoServo = not self.estadoServo
         self.registrarEnBitacora(linea)
 
     def setAngulo(self, angulo, linea):
