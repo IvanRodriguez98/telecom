@@ -1,5 +1,6 @@
 import os
-import RPi.GPIO as GPIO
+from gpiozero import DistanceSensor
+#import RPi.GPIO as GPIO
 
 class SistemaAlarma():
     
@@ -10,7 +11,15 @@ class SistemaAlarma():
         self.nombreArchivo = 'bitacora_alarma.txt'
         self.rutaArchivo = os.path.join(self.rutaLogs, self.nombreArchivo)
         self.crearArchivo()
-        
+        self.codigoDesactivacion = codigoDesactivacion
+        self.pinAlarma = 25
+        self.distanciaSensor = 100
+        self.pinEcho = 8
+        self.pinTrig = 7
+        #self.sensor = DistanceSensor(self.pinEcho,self.pinTrig)
+        self.estadoSensor = True
+
+
     def cambiarEstado(self):
         self.activo = not self.activo
         
@@ -28,3 +37,15 @@ class SistemaAlarma():
     def registrarEnBitacora(self, mensaje):
         with open(self.rutaArchivo, 'a') as log:
             log.write(mensaje)
+
+    #HAZ LAS FUNCIONES PARA CAMBIAR EL ESTADO DEL SENSOR, CAMBIAR LA DISTANCIA, EL HILO DE LECTURA, Y LO MISMO PERO EN LA INTERFAZ
+
+    def cambiarEstadoSensor(self):
+        self.estadoSensor = not self.estadoSensor
+
+    def sensorActivo(self):
+        return self.estadoSensor
+
+    def establecerDistanciaSensor(self,distancia,linea):
+        self.distanciaSensor = distancia
+        self.registrarEnBitacora(linea)

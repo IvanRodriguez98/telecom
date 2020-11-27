@@ -15,7 +15,7 @@ class SistemaAcceso():
         self.anguloDefault = 90
         self.gpioServoPin = 17
         self.codigoDesactivacion = codigoDesactivacion
-        self.servo = AngularServo(self.gpioServoPin)
+        #self.servo = AngularServo(self.gpioServoPin)
 
     def cambiarEstado(self):
         self.activo = not self.activo
