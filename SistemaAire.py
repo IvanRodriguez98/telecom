@@ -1,23 +1,22 @@
 import os
-from gpiozero import DistanceSensor
 import RPi.GPIO as GPIO
+import Adafruit_DHT
 
-class SistemaAlarma():
+
+class SistemaAire():
     
     def __init__(self,codigoDesactivacion):
         self.activo = True
         self.DIR_BASE = os.path.dirname(os.path.abspath(__file__))
         self.rutaLogs = os.path.join(self.DIR_BASE, 'logs')
-        self.nombreArchivo = 'bitacora_alarma.txt'
+        self.nombreArchivo = 'bitacora_aire.txt'
         self.rutaArchivo = os.path.join(self.rutaLogs, self.nombreArchivo)
         self.crearArchivo()
         self.codigoDesactivacion = codigoDesactivacion
-        self.pinAlarma = 25
-        self.distanciaSensor = 100
-        self.pinled = 3
-        self.pinEcho = 7
-        self.pinTrig = 8
+        self.pinSensor = 2
+        self.gradosSensor = 40
         self.estadoSensor = True
+        self.setup()
         
     def cambiarEstado(self):
         self.activo = not self.activo
@@ -36,13 +35,20 @@ class SistemaAlarma():
     def registrarEnBitacora(self, mensaje):
         with open(self.rutaArchivo, 'a') as log:
             log.write(mensaje)
+            
+    def Dht11(self):
+        sensor = Adafruit_DHT.DHT11
+        return Adafruit_DHT.read_retry(sensor,self.pinSensor)
 
+    def setup(self):
+        GPIO.setmode(GPIO.BCM)
+        
     def cambiarEstadoSensor(self):
         self.estadoSensor = not self.estadoSensor
 
     def sensorActivo(self):
         return self.estadoSensor
 
-    def establecerDistanciaSensor(self,distancia,linea):
-        self.distanciaSensor = distancia
+    def establecerGradosSensor(self,grados,linea):
+        self.gradosSensor = grados
         self.registrarEnBitacora(linea)

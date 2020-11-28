@@ -1,0 +1,8 @@
+[28-Nov-2020 08:59:20] Cambio el maximo de temperatura a 25 °C, operacion realizada por: Ivan con rol Administrador
+[28-Nov-2020 08:59:22] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion
+[28-Nov-2020 08:59:25] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion
+[28-Nov-2020 08:59:28] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion
+[28-Nov-2020 08:59:31] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion
+[28-Nov-2020 08:59:35] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion
+[28-Nov-2020 08:59:37] Estado de sensor de temperatura: Inactivo, operacion realizada por: Ivan con rol Administrador
+[28-Nov-2020 08:59:38] La temperatura ambiente excedio la maxima establecida con 38.0 °C, se procedio a activar la refrigeracion

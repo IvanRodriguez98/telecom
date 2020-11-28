@@ -1,0 +1,2 @@
+Ivan,Administrador,pass1234,2349,1234,1111
+Jose,Operador,pass1,1423,4567,2222
